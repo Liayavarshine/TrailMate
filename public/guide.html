@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide Dashboard — TrailMate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/guide.html"><span class="dot"></span> TrailMate <span class="badge">Guide</span></a>
+  <div class="right">
+    <span class="userchip" id="userName"></span>
+    <button class="logout" id="logoutBtn">Log out</button>
+  </div>
+</header>
+
+<main>
+  <div class="stat-grid" id="statsWrap" style="margin-bottom:32px"></div>
+
+  <div class="section">
+    <h2>My profile</h2>
+    <p class="sub">Tourists see this when browsing packages you lead, and it's used for guide recommendations.</p>
+    <form id="profileForm" style="max-width:460px">
+      <label>Bio</label>
+      <textarea id="pBio" rows="3" placeholder="Tell tourists about your specialty..."></textarea>
+      <label>Languages you speak</label>
+      <div class="check-grid" id="langGrid"></div>
+      <label>Years of experience</label>
+      <input type="number" id="pExperience" min="0" step="0.5">
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;margin-bottom:14px">
+        <input type="checkbox" id="pAvailability" style="width:auto;margin:0"> Available for new bookings
+      </label>
+      <button type="submit" class="primary">Save profile</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h2>Verification documents</h2>
+    <div id="docsWrap"></div>
+    <form id="docForm" style="max-width:420px;margin-top:14px">
+      <label>Document type</label>
+      <input type="text" id="dType" placeholder="Government ID, License, ..." required>
+      <label>Verification document (PDF, JPG, PNG, WebP — max 10MB)</label>
+      <input type="file" id="dFile" accept="application/pdf,image/jpeg,image/png,image/webp,.pdf,.jpg,.jpeg,.png,.webp" required>
+      <button type="submit" class="secondary">Upload document</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h2>Packages I lead</h2>
+    <div id="packagesWrap" class="card-grid"></div>
+  </div>
+
+  <div class="section">
+    <h2>My bookings</h2>
+    <div id="bookingsWrap"></div>
+    <button type="button" class="primary" id="claimPayoutBtn" style="margin-top:14px">Claim completed trip pay</button>
+  </div>
+
+  <div class="section">
+    <h2>Reviews I've received</h2>
+    <div id="reviewsWrap"></div>
+  </div>
+</main>
+
+<script src="/js/api.js"></script>
+<script src="/js/guide.js"></script>
+</body>
+</html>

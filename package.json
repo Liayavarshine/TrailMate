@@ -1,0 +1,19 @@
+{
+  "name": "tourist-booking-system",
+  "version": "1.0.0",
+  "description": "Full-stack Tourist/Tour Guide Management System with PostgreSQL, Tour Packages, and guide recommendations",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "migrate": "node migrate.js",
+    "seed": "node seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.23.0"
+  }
+}

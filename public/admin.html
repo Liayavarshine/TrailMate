@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard — TrailMate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/admin.html"><span class="dot"></span> TrailMate <span class="badge">Admin</span></a>
+  <div class="right">
+    <span class="userchip" id="userName"></span>
+    <button class="logout" id="logoutBtn">Log out</button>
+  </div>
+</header>
+
+<main class="wide">
+  <div class="section">
+    <h2>Reports</h2>
+    <div class="stat-grid" id="statsWrap"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>Tour packages</h2>
+      <button class="accent" id="addPackageBtn">+ Add package</button>
+    </div>
+    <div id="packagesWrap"></div>
+  </div>
+
+  <div class="section">
+    <h2>Verify documents</h2>
+    <div id="docsWrap"></div>
+  </div>
+
+  <div class="section">
+    <h2>Manage users &amp; guides</h2>
+    <div id="usersWrap"></div>
+  </div>
+
+  <div class="section">
+    <h2>All bookings</h2>
+    <div id="bookingsWrap"></div>
+  </div>
+</main>
+
+<div id="modalRoot"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrailMate — Tourist Booking System</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="brand"><span class="dot"></span> TrailMate</div>
+    <p class="tag">Discover India's best tour packages and book a local guide who speaks your language.</p>
+
+    <div class="tabs">
+      <button id="tabLogin" class="active">Log in</button>
+      <button id="tabRegister">Register</button>
+    </div>
+
+    <form id="loginForm">
+      <label>Email</label>
+      <input type="email" id="loginEmail" required placeholder="you@example.com">
+      <label>Password</label>
+      <input type="password" id="loginPassword" required placeholder="••••••••">
+      <button type="submit" class="primary full">Log in</button>
+    </form>
+
+    <form id="registerForm" style="display:none">
+      <label>I am a</label>
+      <select id="regRole">
+        <option value="tourist">Tourist</option>
+        <option value="guide">Tour Guide</option>
+      </select>
+      <label>Full name</label>
+      <input type="text" id="regName" required placeholder="Jane Doe">
+      <label>Email</label>
+      <input type="email" id="regEmail" required placeholder="you@example.com">
+      <label>Phone</label>
+      <input type="text" id="regPhone" placeholder="9876543210">
+      <label>Password</label>
+      <input type="password" id="regPassword" required placeholder="At least 6 characters">
+      <div id="langPrefBlock">
+        <label>Languages you're comfortable with (used to recommend guides)</label>
+        <div class="check-grid" id="langPrefGrid"></div>
+      </div>
+      <button type="submit" class="primary full">Create account</button>
+    </form>
+
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script>
+const LANGUAGES = ['English', 'Hindi', 'Tamil', 'Malayalam', 'Telugu', 'Kannada', 'Bengali', 'Marathi', 'Gujarati', 'Punjabi'];
+
+const tabLogin = document.getElementById('tabLogin');
+const tabRegister = document.getElementById('tabRegister');
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+const langPrefBlock = document.getElementById('langPrefBlock');
+const langPrefGrid = document.getElementById('langPrefGrid');
+const regRole = document.getElementById('regRole');
+
+LANGUAGES.forEach((lang, i) => {
+  const id = `lang_${i}`;
+  langPrefGrid.appendChild(el('label', {}, [
+    el('input', { type: 'checkbox', id, value: lang }),
+    lang
+  ]));
+});
+
+function toggleLangBlock() {
+  langPrefBlock.style.display = regRole.value === 'tourist' ? 'block' : 'none';
+}
+regRole.addEventListener('change', toggleLangBlock);
+toggleLangBlock();
+
+tabLogin.onclick = () => {
+  tabLogin.classList.add('active'); tabRegister.classList.remove('active');
+  loginForm.style.display = 'block'; registerForm.style.display = 'none';
+};
+tabRegister.onclick = () => {
+  tabRegister.classList.add('active'); tabLogin.classList.remove('active');
+  registerForm.style.display = 'block'; loginForm.style.display = 'none';
+};
+
+function redirectByRole(role) {
+  if (role === 'admin') window.location.href = '/admin.html';
+  else if (role === 'guide') window.location.href = '/guide.html';
+  else window.location.href = '/packages.html';
+}
+
+if (Auth.token && Auth.user) redirectByRole(Auth.user.role);
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = e.submitter; btn.disabled = true;
+  try {
+    const { token, user } = await api('/auth/login', {
+      method: 'POST',
+      body: { email: loginEmail.value.trim(), password: loginPassword.value }
+    });
+    Auth.set(token, user);
+    redirectByRole(user.role);
+  } catch (err) { toast(err.message, true); btn.disabled = false; }
+});
+
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = e.submitter; btn.disabled = true;
+  try {
+    const languagePrefs = [...langPrefGrid.querySelectorAll('input:checked')].map((c) => c.value);
+    const { token, user } = await api('/auth/register', {
+      method: 'POST',
+      body: {
+        role: regRole.value, name: regName.value.trim(), email: regEmail.value.trim(),
+        phone: regPhone.value.trim(), password: regPassword.value, languagePrefs
+      }
+    });
+    Auth.set(token, user);
+    redirectByRole(user.role);
+  } catch (err) { toast(err.message, true); btn.disabled = false; }
+});
+</script>
+</body>
+</html>

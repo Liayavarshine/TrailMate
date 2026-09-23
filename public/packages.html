@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browse Tour Packages — TrailMate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/packages.html"><span class="dot"></span> TrailMate</a>
+  <nav>
+    <a href="/packages.html">Browse Packages</a>
+    <a href="/tourist.html">My Bookings</a>
+  </nav>
+  <div class="right">
+    <span class="userchip" id="userName"></span>
+    <button class="logout" id="logoutBtn">Log out</button>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Find your next Indian adventure</h1>
+  <p class="sub">Curated tour packages across India's most-loved destinations — with local guides who speak your language.</p>
+  <div class="search-bar">
+    <input type="text" id="searchBox" placeholder="Search by destination, e.g. Goa, Kerala, Jaipur...">
+    <button class="accent" id="searchBtn">Search</button>
+    <button class="secondary" id="clearSearchBtn" type="button">Clear</button>
+  </div>
+</div>
+
+<main class="wide">
+  <div class="filter-bar">
+    <select id="categoryFilter"><option value="">All categories</option></select>
+    <select id="stateFilter"><option value="">All states</option></select>
+    <select id="sortFilter">
+      <option value="">Newest first</option>
+      <option value="price_asc">Price: Low to High</option>
+      <option value="price_desc">Price: High to Low</option>
+      <option value="rating">Highest Rated</option>
+      <option value="duration">Shortest Trip</option>
+    </select>
+    <button class="secondary small" id="clearFiltersBtn">Clear filters</button>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2 id="resultsTitle">All packages</h2>
+      <span class="sub" id="resultsCount"></span>
+    </div>
+    <div id="packagesWrap" class="card-grid"></div>
+  </div>
+</main>
+
+<script src="/js/api.js"></script>
+<script src="/js/packages.js"></script>
+</body>
+</html>
