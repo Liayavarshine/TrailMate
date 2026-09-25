@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: trailmate
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    # Render runs each deploy fresh; applying the schema on every deploy is safe
+    # because schema.sql uses CREATE TABLE IF NOT EXISTS.
+    startCommand: npm run migrate && npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: trailmate-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+
+databases:
+  - name: trailmate-db
+    plan: free
