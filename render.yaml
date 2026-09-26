@@ -6,7 +6,7 @@ services:
     buildCommand: npm install
     # Render runs each deploy fresh; applying the schema on every deploy is safe
     # because schema.sql uses CREATE TABLE IF NOT EXISTS.
-    startCommand: npm run migrate && npm start
+    startCommand: npm run seed && npm start
     envVars:
       - key: DATABASE_URL
         fromDatabase:
