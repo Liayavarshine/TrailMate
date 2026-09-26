@@ -4,10 +4,14 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 
+// Render's managed Postgres (and most hosted Postgres providers) require SSL,
+// but a local/dev Postgres usually doesn't support it. NODE_ENV=production is
+// set automatically by Render, so this needs no manual configuration there.
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   max: 10,
-  idleTimeoutMillis: 30000
+  idleTimeoutMillis: 30000,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
 pool.on('error', (err) => {
